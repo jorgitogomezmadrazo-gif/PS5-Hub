@@ -1,0 +1,112 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>React Spotify</title>
+<style>
+*{box-sizing:border-box;margin:0}html,body{height:100%}body{font-family:Quicksand,"Segoe UI",system-ui,sans-serif;color:#fff;background:#000;user-select:none;display:flex;flex-direction:column}
+a{color:inherit;text-decoration:none}svg{width:1em;height:1em;fill:currentColor;flex:none}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:#090420}
+header{background:#000;border-bottom:1px solid #ffffff1a;width:100%}
+.sd{display:flex;align-items:center;gap:24px;padding:20px}
+.cv{display:block;width:64px;height:64px;border-radius:8px;background:#18181b center/cover;box-shadow:0 8px 20px #0008;position:relative;cursor:pointer}
+.cv i{position:absolute;inset:0;border-radius:8px;background:#0008;opacity:0;display:grid;place-items:center;font-style:normal;font-size:20px;transition:opacity .2s}.cv:hover i{opacity:1}
+.ti{display:flex;flex-direction:column;min-width:0;width:144px;flex:none}.ti b{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ti small{color:#71717a;font-size:12px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctl{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:8px}
+.sc{width:100%;display:flex;align-items:center;gap:12px}.sc span{font-size:10px;color:#d4d4d8;font-variant-numeric:tabular-nums}
+.bar{position:relative;flex:1;height:4px;border-radius:4px;background:#27272a}.bar div{position:absolute;left:0;top:0;height:100%;background:#1DB954;border-radius:4px;pointer-events:none}.bar input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.bt{display:flex;align-items:center;gap:20px}.bt button{background:none;border:0;color:#71717a;cursor:pointer;font-size:14px;display:grid;place-items:center}.bt button:hover{color:#fff}
+.bt .pp{width:32px;height:32px;border-radius:50%;background:#fff;color:#000;font-size:18px}.bt .pp:hover{color:#000}
+.fv{background:none;border:0;cursor:pointer;color:#52525b;font-size:20px;transition:transform .15s}.fv:hover{transform:scale(1.1);color:#d4d4d8}.fv.on{color:#1DB954}
+.wrap{display:flex;flex:1;min-height:0}
+aside{display:flex;flex-direction:column;width:200px;background:#000;padding:12px 8px;gap:24px;flex:none}
+.logo{display:flex;align-items:center;gap:8px;padding:0 8px}.logo svg{color:#1DB954;font-size:24px;cursor:auto}.logo span{font-weight:700;font-size:18px;letter-spacing:-.02em}
+nav{display:flex;flex-direction:column;gap:4px}nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;font-size:14px;font-weight:500;color:#a1a1aa;transition:all .2s;cursor:pointer}nav a:hover{background:#ffffff0d}nav a svg{font-size:18px}
+nav a.on{background:#ffffff1a;color:#fff}nav a.on svg{color:#1DB954}nav a.on::after{content:"";margin-left:auto;width:4px;height:16px;border-radius:4px;background:#1DB954}
+main{flex:1;min-width:0;overflow:auto;background:#000;padding:16px 4px 16px 0}
+.h5{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:#d4d4d8;margin:0 8px 16px}
+.row{display:flex;align-items:center;justify-content:space-between;padding:8px;border-radius:8px;cursor:pointer;transition:background .15s}.row:hover{background:#ffffff0d}.row.act{background:#ffffff1a}
+.row .l{display:flex;align-items:center;gap:12px;min-width:0}.row .c{width:48px;height:48px;border-radius:50%;background:#18181b center/cover;flex:none}.row.act .c{animation:sp 8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.row .t{display:flex;flex-direction:column;min-width:0}.row .t b{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.row.act .t b{color:#1DB954}.row .t small{font-size:12px;color:#71717a;margin-top:2px}
+.row .fv{margin-left:12px;opacity:0}.row:hover .fv,.row .fv:focus,.row .fv.on.keep{opacity:1}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:60px 0;color:#fff}.empty svg{font-size:48px;color:#3f3f46}.empty p{font-size:14px;font-weight:500}.empty small{color:#a1a1aa;font-size:12px;display:block;margin-top:4px;font-weight:400}
+.ct{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:48px;min-height:100%;padding:24px}
+.av{width:64px;height:64px;border-radius:50%;background:#18181b;border:1px solid #ffffff1a;display:grid;place-items:center;font-size:24px;font-weight:700;color:#1DB954;margin:0 auto 16px}
+.ct .nm{text-align:center}.ct .nm b{display:block;font-size:14px;font-weight:600}.ct .nm small{color:#d4d4d8;font-size:12px}
+.dv{display:flex;align-items:center;gap:12px;width:100%;max-width:320px}.dv i{flex:1;height:1px;background:#fff3}.dv span{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#d4d4d8}
+.lk{display:flex;gap:12px;list-style:none;padding:0}.lk a{position:relative;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#18181b;border:1px solid #ffffff12;color:#a1a1aa;font-size:18px;transition:all .2s}.lk a:hover{color:#fff}
+.lk a em{position:absolute;top:-36px;left:50%;transform:translateX(-50%);padding:4px 8px;border-radius:6px;background:#27272a;font-style:normal;font-size:11px;white-space:nowrap;opacity:0;transition:opacity .2s;pointer-events:none}.lk a:hover em{opacity:1}
+.ct p.n{color:#d4d4d8;font-size:12px;text-align:center;max-width:320px;line-height:1.6}
+footer{text-align:center;padding:8px;font-size:14px;background:#000}footer .r{color:#ef4444}
+#toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-60px);background:#1f1f23;color:#fff;border-radius:8px;padding:10px 16px;font-size:14px;box-shadow:0 6px 20px #0008;transition:transform .25s;z-index:9}#toast.on{transform:translateX(-50%) translateY(0)}
+@media(max-width:639px){aside{width:65px}.logo span,nav a span{display:none}nav a.on::after{display:none}.cv{display:none}.row .c{display:none}.sd{gap:12px;padding:10px}.ti{width:auto}}
+</style></head><body>
+<audio id="au"></audio>
+<header id="hd"></header>
+<div class="wrap"><aside><div class="logo"><svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.669 11.538a.5.5 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.499.499 0 0 1-.222-.973c3.048-.696 5.662-.397 7.77.892a.5.5 0 0 1 .166.686m.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-7.972-.932a.625.625 0 0 1-.362-1.194c2.905-.881 6.517-.454 8.986 1.063a.624.624 0 0 1 .206.858m.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.748.748 0 1 1-.434-1.432c2.825-.857 7.523-.692 10.492 1.07a.747.747 0 1 1-.764 1.288"/></svg><span>Spotify</span></div>
+<nav id="nv"></nav></aside><main id="mn"></main></div>
+<footer>Made with <span class="r">❤</span> by <a href="https://parham-ab.netlify.app/" target="_blank" rel="noreferrer">Parham Abolghasemi</a></footer>
+<div id="toast"></div>
+<script>
+var SONGS=[
+{
+"id": 1,
+"title": "Style",
+"singer": "Taylor Swift",
+"cover": "songs/style.jpg",
+"track": "songs/style.mp3"
+},
+{
+"id": 2,
+"title": "Hate Me",
+"singer": "Ellie Goulding",
+"cover": "songs/hate-me.jpg",
+"track": "songs/hate-me.mp3"
+},
+{
+"id": 3,
+"title": "Ultraviolet",
+"singer": "Lana Del Rey",
+"cover": "songs/ultraviolet.jpg",
+"track": "songs/ultraviolet.mp3"
+}
+];
+var S=SONGS.map(function(s){return{id:s.id,title:s.title,singer:s.singer,cover:s.cover,track:s.track,active:false,isFavorite:false,isPlaying:false}});
+try{var fv=JSON.parse(localStorage.getItem("spotify_fav")||"[]");S.forEach(function(s){s.isFavorite=fv.indexOf(s.id)>-1})}catch(e){}
+var au=document.getElementById("au"),route="/songs",$=function(i){return document.getElementById(i)};
+var I={play:'<svg viewBox="0 0 16 16"><path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393"/></svg>',pause:'<svg viewBox="0 0 16 16"><path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5m5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5"/></svg>',
+heart:'<svg viewBox="0 0 24 24"><path d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54z"/></svg>',
+heart0:'<svg viewBox="0 0 24 24"><path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3m-4.4 15.55-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05"/></svg>',
+prev:'<svg viewBox="0 0 16 16"><path d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/></svg>',next:'<svg viewBox="0 0 16 16"><path d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/></svg>',
+music:'<svg viewBox="0 0 16 16"><path d="M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2"/><path fill-rule="evenodd" d="M9 3v10H8V3z"/><path d="M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5z"/></svg>',
+cry:'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20m0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16m-3.5-9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m7 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M12 13.5c-2 0-3.7 1.2-4.4 3h1.7c.6-.8 1.5-1.2 2.7-1.2s2.1.4 2.7 1.2h1.7c-.7-1.8-2.4-3-4.4-3"/></svg>',
+contact:'<svg viewBox="0 0 24 24"><path d="M20 0H4v2h16zM4 24h16v-2H4zM20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m-8 2.75a2.25 2.25 0 1 1 0 4.5 2.25 2.25 0 0 1 0-4.5M17 17H7v-1.5c0-1.67 3.33-2.5 5-2.5s5 .83 5 2.5z"/></svg>',
+gh:'<svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg>',
+li:'<svg viewBox="0 0 16 16"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>',
+mail:'<svg viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>',
+web:'<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20m6.9 6h-2.95a15.7 15.7 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.9 8M12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96M4.26 14a8.2 8.2 0 0 1 0-4h3.38a16.5 16.5 0 0 0 0 4zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A8.03 8.03 0 0 1 5.08 16m2.95-8H5.08a8.03 8.03 0 0 1 4.33-3.56A15.7 15.7 0 0 0 8.03 8M12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96M14.34 14H9.66a14.7 14.7 0 0 1 0-4h4.68a14.7 14.7 0 0 1 0 4m.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56M16.36 14a16.5 16.5 0 0 0 0-4h3.38a8.2 8.2 0 0 1 0 4z"/></svg>'};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+var tt;function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("on")},2000)}
+var cur=function(){return S.filter(function(s){return s.active})[0]};
+function save(){try{localStorage.setItem("spotify_fav",JSON.stringify(S.filter(function(s){return s.isFavorite}).map(function(s){return s.id})))}catch(e){}}
+function fmt(t){return isFinite(t)?Math.trunc(t/60)+":"+("0"+Math.trunc(t%60)).slice(-2):"0:00"}
+function load(s,thenPlay){S.forEach(function(x){x.active=x.id===s.id;x.isPlaying=false});au.src=s.track;au.load();var f=function(){au.removeEventListener("canplay",f);au.play().catch(function(){});s.isPlaying=true;draw()};au.addEventListener("canplay",f);draw()}
+function playH(id){var s=S.filter(function(x){return x.id===id})[0];if(s.active){if(s.isPlaying){au.pause()}else{au.play().catch(function(){})}s.isPlaying=!s.isPlaying;draw();return}load(s)}
+function step(d){var c=cur();if(!c)return;var i=S.indexOf(c);load(S[(i+d+S.length)%S.length])}
+function fav(id){var s=S.filter(function(x){return x.id===id})[0];s.isFavorite=!s.isFavorite;save();toast(s.isFavorite?"Added to favorites!":"Removed from favorites!");draw()}
+au.addEventListener("ended",function(){step(1)});
+setInterval(function(){if(cur())head()},500);
+function head(){var c=cur(),d=c||S[0],t=c?au.currentTime:0,f=c?au.duration:0,pc=f?t/f*100:0;
+$("hd").innerHTML='<div class="sd"><div class="cv" style="background-image:url('+d.cover+')" data-p="'+(c?d.id:"")+'"><i>'+(d.isPlaying?I.pause:I.play)+'</i></div><div class="ti"><b>'+esc(d.title)+'</b><small>'+esc(d.singer)+'</small></div><div class="ctl"><div class="sc"><span>'+(c?fmt(t):"0:00")+'</span><div class="bar"><div style="width:'+pc+'%"></div>'+(c?'<input type="range" min="0" max="'+(isFinite(f)?f:100)+'" step="1" value="'+t+'">':"")+'</div><span>'+(c&&isFinite(f)?fmt(f):"0:00")+'</span></div>'+(c?'<div class="bt"><button data-a="prev">'+I.prev+'</button><button class="pp" data-a="pp">'+(d.isPlaying?I.pause:I.play)+'</button><button data-a="next">'+I.next+'</button></div>':"")+'</div><button class="fv'+(d.isFavorite?" on":"")+'" data-f="'+d.id+'">'+(d.isFavorite?I.heart:I.heart0)+'</button></div>'}
+function rows(list){return list.map(function(s){return'<div class="row'+(s.active?" act":"")+'" data-p="'+s.id+'"><div class="l"><div class="c" style="background-image:url('+s.cover+')"></div><div class="t"><b>'+esc(s.title)+'</b><small>'+esc(s.singer)+'</small></div></div><button class="fv'+(s.isFavorite?" on keep":"")+'" data-f="'+s.id+'">'+(s.isFavorite?I.heart:I.heart0)+'</button></div>'}).join("")}
+function page(){var m=$("mn");
+if(route==="/songs")m.innerHTML='<p class="h5">All tracks</p>'+rows(S);
+else if(route==="/favorites"){var l=S.filter(function(s){return s.isFavorite});m.innerHTML='<p class="h5">Liked songs</p>'+(l.length?rows(l):'<div class="empty">'+I.cry+'<div><p>No liked songs yet</p><small>Songs you like will appear here</small></div></div>')}
+else m.innerHTML='<section class="ct"><div class="nm"><div class="av">P</div><b>Parham Abolghasemi</b><small>Frontend Developer · UI/UX Designer</small></div><div class="dv"><i></i><span>Connect</span><i></i></div><ul class="lk"><li><a href="https://github.com/parham-ab" target="_blank" rel="noopener noreferrer">'+I.gh+'<em>Github</em></a></li><li><a href="https://www.linkedin.com/in/parham-abolghasemi/" target="_blank" rel="noopener noreferrer">'+I.li+'<em>LinkedIn</em></a></li><li><a href="mailto:parham.abg1@gmail.com">'+I.mail+'<em>Email</em></a></li><li><a href="https://parham-ab.netlify.app/" target="_blank" rel="noopener noreferrer">'+I.web+'<em>Website</em></a></li></ul><p class="n">Open to suggestions, feedback, and job opportunities.</p></section>'}
+function nav(){$("nv").innerHTML=[["/songs",I.music,"All Songs"],["/favorites",I.heart,"Favorites"],["/contact-us",I.contact,"Contact us"]].map(function(n){return'<a data-r="'+n[0]+'" class="'+(route===n[0]?"on":"")+'">'+n[1]+'<span>'+n[2]+'</span></a>'}).join("")}
+function draw(){head();page();nav()}
+document.addEventListener("click",function(e){var t=e.target,b;
+if(b=t.closest("[data-f]")){e.stopPropagation();fav(+b.dataset.f);return}
+if(b=t.closest("[data-a]")){var a=b.dataset.a;a==="pp"?playH(cur().id):step(a==="next"?1:-1);return}
+if(b=t.closest("[data-r]")){route=b.dataset.r;draw();return}
+if(b=t.closest("[data-p]")){if(b.dataset.p)playH(+b.dataset.p)}});
+document.addEventListener("input",function(e){if(e.target.matches(".bar input"))au.currentTime=+e.target.value});
+document.addEventListener("contextmenu",function(e){e.preventDefault()});
+draw();
+</script></body></html>

@@ -1,0 +1,11 @@
+{
+  "name": "game-hub-fly",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node server.js", "fetch-scramjet": "node scripts/fetch-scramjet.mjs" },
+  "dependencies": {
+    "@mercuryworkshop/scramjet": "latest",
+    "@mercuryworkshop/scramjet-controller": "latest",
+    "wisp-server-node": "latest"
+  }
+}

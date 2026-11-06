@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for ps5-hub-6ffqca on 2026-11-06T02:04:59Z
+# fly.toml app configuration file generated for ps5-hub-a079xq on 2026-11-06T16:38:10Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'ps5-hub-6ffqca'
-primary_region = 'ams'
+app = 'ps5-hub-a079xq'
+primary_region = 'lax'
 
 [build]
 [http_service]
